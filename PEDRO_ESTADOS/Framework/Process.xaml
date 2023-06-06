@@ -1,0 +1,613 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Process" this:Process.in_Config_Sheets_Proc="[{&quot;Settings&quot;, &quot;Constants&quot;}]" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.ComponentModel;assembly=System" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:umm="clr-namespace:UiPath.MicrosoftOffice365.Models;assembly=UiPath.MicrosoftOffice365" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Transaction item to be processed." Name="in_TransactionItem" Type="InArgument(sd:DataRow)" />
+    <x:Property Name="in_dtBodegas" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="io_dtFinal" Type="InOutArgument(sd:DataTable)" />
+    <x:Property Name="io_dtTransactionData" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_listMail" Type="InArgument(scg:List(snm:MailMessage))" />
+    <x:Property Name="in_fechaReporte" Type="InArgument(s:DateTime)" />
+    <x:Property Name="in_ConfigFile_Proc" Type="InArgument(x:String)" />
+    <x:Property Name="in_Config_Sheets_Proc" Type="InArgument(s:String[])" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1270.4,1476.8</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ProcessTransaction_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="116">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Windows.Forms</x:String>
+      <x:String>Microsoft.Graph</x:String>
+      <x:String>UiPath.Excel</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Excel</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>UiPath.Database</x:String>
+      <x:String>UiPath.Database.Activities</x:String>
+      <x:String>Microsoft.Exchange.WebServices.Data</x:String>
+      <x:String>UiPath.Mail</x:String>
+      <x:String>UiPath.Mail.Exchange</x:String>
+      <x:String>UiPath.Mail.Exchange.Activities</x:String>
+      <x:String>UiPath.Mail.Outlook.Activities</x:String>
+      <x:String>UiPath.Mail.Activities</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Activities.Mail</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Models</x:String>
+      <x:String>UiPath.Shared.Services.Graph.Mail.Models</x:String>
+      <x:String>UiPath.MicrosoftOffice365.Enums</x:String>
+      <x:String>UiPath.Mail.Activities.Business</x:String>
+      <x:String>UiPath.Shared.Activities.ConnectionService.Contracts</x:String>
+      <x:String>UiPath.Mail.Activities.Utils</x:String>
+      <x:String>UiPath.Mail.Activities.Business.HtmlEditor</x:String>
+      <x:String>System.Web.Mail</x:String>
+      <x:String>UiPath.Mail.Activities.Business.ForEachMail</x:String>
+      <x:String>UiPath.Shared.Activities.Business</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>UiPath.Excel.Activities</x:String>
+      <x:String>UiPath.Mail.SMTP.Activities</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="94">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Windows.Forms</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Data.Entity</AssemblyReference>
+      <AssemblyReference>Microsoft.Graph</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365</AssemblyReference>
+      <AssemblyReference>Microsoft.Graph.Core</AssemblyReference>
+      <AssemblyReference>netstandard</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>UiPath.Java.Activities</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>UiPath.MicrosoftOffice365.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Database</AssemblyReference>
+      <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.Exchange.WebServices</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.Web</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap:VirtualizedContainerService.HintSize="1280.8,1412" sap2010:WorkflowViewState.IdRef="Sequence_14">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="strEstado" />
+      <Variable x:TypeArguments="x:Boolean" Name="boolMail" />
+      <Variable x:TypeArguments="x:String" Name="numPedido" />
+      <Variable x:TypeArguments="x:String" Name="bodega" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="out_Config_Proc">
+        <Variable.Default>
+          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:Object)" ExpressionText="New Dictionary(of String, Object)" />
+        </Variable.Default>
+      </Variable>
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence sap2010:Annotation.AnnotationText="Invoke major steps of the business process, which are usually implemented by multiple subworkflows.&#xA;&#xA;If a BusinessRuleException is thrown, the transaction is skipped. &#xA;If another kind of exception occurs, the current transaction can be retried. " DisplayName="Process" sap:VirtualizedContainerService.HintSize="1239.2,1319.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="nBodega" />
+        <Variable x:TypeArguments="x:String" Name="strCorreo" />
+        <Variable x:TypeArguments="x:String" Name="strEstadoCorreo" />
+        <Variable x:TypeArguments="x:String" Name="nPedido" />
+        <Variable x:TypeArguments="scg:List(snm:MailMessage)" Name="listMail" />
+        <Variable x:TypeArguments="umm:Office365Message[]" Name="lista" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:LogMessage DisplayName="Log Message Process Start" sap:VirtualizedContainerService.HintSize="1197.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Started Process&quot;]" />
+      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="1197.6,62.4" sap2010:WorkflowViewState.IdRef="WriteLine_13" Text="[in_TransactionItem(&quot;proceso&quot;).ToString]" />
+      <Flowchart sap:VirtualizedContainerService.HintSize="1197.6,819.2" sap2010:WorkflowViewState.IdRef="Flowchart_2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">560,2.66666666666666</av:Point>
+            <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+            <x:Double x:Key="Width">1164.3801117462708</x:Double>
+            <x:Double x:Key="Height">782.1924555361494</x:Double>
+            <av:PointCollection x:Key="ConnectorLocation">590,77.3333333333333 590,107.333333333333 589.975,107.333333333333 589.975,127.333333333333</av:PointCollection>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Flowchart.StartNode>
+          <x:Reference>__ReferenceID2</x:Reference>
+        </Flowchart.StartNode>
+        <FlowDecision x:Name="__ReferenceID2" Condition="[in_TransactionItem(&quot;proceso&quot;).ToString.Contains(&quot;1&quot;)]" DisplayName="Flow Decision" sap:VirtualizedContainerService.HintSize="79.2,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <av:Point x:Key="ShapeLocation">550.641666666667,127.333333333333</av:Point>
+              <av:Size x:Key="ShapeSize">79.2,87.2</av:Size>
+              <av:PointCollection x:Key="TrueConnector">550.641666666667,170.933333333333 310,170.933333333333 310,255.6</av:PointCollection>
+              <av:PointCollection x:Key="FalseConnector">629.841666666667,170.933333333333 790,170.933333333333 790,246.4</av:PointCollection>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <FlowDecision.True>
+            <FlowStep x:Name="__ReferenceID0">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <av:Point x:Key="ShapeLocation">210,255.6</av:Point>
+                  <av:Size x:Key="ShapeSize">200,68.8</av:Size>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Sequence DisplayName="Secuencia de notificación" sap:VirtualizedContainerService.HintSize="662.4,5517.6" sap2010:WorkflowViewState.IdRef="Sequence_125">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sd:DataTable" Name="procesado" />
+                  <Variable x:TypeArguments="sd:DataTable" Name="in_Dt_Settings" />
+                  <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Default="[New Dictionary(Of String,Object)]" Name="in_Config" />
+                  <Variable x:TypeArguments="ui:DatabaseConnection" Name="conSQL" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="620.8,52.8" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[in_Config_Sheets_Proc]">
+                  <ui:ForEach.Body>
+                    <ActivityAction x:TypeArguments="x:String">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="x:String" Name="Sheet" />
+                      </ActivityAction.Argument>
+                      <Sequence sap2010:Annotation.AnnotationText="Read settings and constants from the configuration file and add them to the Config dictionary." DisplayName="Get local settings and constants" sap:VirtualizedContainerService.HintSize="558.4,638.4" sap2010:WorkflowViewState.IdRef="Sequence_126">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="sd:DataTable" Name="dt_SettingsAndConstants" />
+                        </Sequence.Variables>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[Dt_SettingsAndConstants]" DisplayName="Read range (Settings and Constants sheets)" sap:VirtualizedContainerService.HintSize="516.8,88" sap2010:WorkflowViewState.IdRef="ReadRange_2" SheetName="[Sheet]" WorkbookPath="[in_ConfigFile_Proc]" />
+                        <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[Dt_SettingsAndConstants]" DisplayName="For each configuration row" sap:VirtualizedContainerService.HintSize="516.8,386.4" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                          <ui:ForEachRow.Body>
+                            <ActivityAction x:TypeArguments="sd:DataRow">
+                              <ActivityAction.Argument>
+                                <DelegateInArgument x:TypeArguments="sd:DataRow" Name="Row" />
+                              </ActivityAction.Argument>
+                              <If sap2010:Annotation.AnnotationText="Read non-empty rows in the sheet." Condition="[Not String.IsNullOrWhiteSpace(row(&quot;Name&quot;).ToString.Trim)]" DisplayName="If configuration row is not empty" sap:VirtualizedContainerService.HintSize="483.2,270.4" sap2010:WorkflowViewState.IdRef="If_5">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <Assign DisplayName="Add Config key/value pair" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_29">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Object">[out_Config_Proc(Row("Name").ToString.Trim)]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Object">[Row("Value")]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </If.Then>
+                              </If>
+                            </ActivityAction>
+                          </ui:ForEachRow.Body>
+                        </ui:ForEachRow>
+                      </Sequence>
+                    </ActivityAction>
+                  </ui:ForEach.Body>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </ui:ForEach>
+                <ui:DatabaseConnect DisplayName="Connect to database" sap:VirtualizedContainerService.HintSize="620.8,60" sap2010:WorkflowViewState.IdRef="DatabaseConnect_3" ProviderName="System.Data.SqlClient" ConnectionString="[out_Config_Proc(&quot;conSQL&quot;).ToString]" DatabaseConnection="[conSQL]" />
+                <TryCatch DisplayName="Try initializing assets" sap:VirtualizedContainerService.HintSize="620.8,1162.4" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <TryCatch.Try>
+                    <Sequence sap2010:Annotation.AnnotationText="Get from Orchestrator the values of assets listed in the Assets sheet." DisplayName="Get Orchestrator assets" sap:VirtualizedContainerService.HintSize="512,931.2" sap2010:WorkflowViewState.IdRef="Sequence_128">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="sd:DataTable" Name="dt_Assets" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dt_Assets]" DisplayName="Read range (Assets sheet)" sap:VirtualizedContainerService.HintSize="470.4,88" sap2010:WorkflowViewState.IdRef="ReadRange_3" SheetName="Assets" WorkbookPath="[in_ConfigFile_Proc]" />
+                      <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_Assets]" DisplayName="For each asset row" sap:VirtualizedContainerService.HintSize="470.4,679.2" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+                        <ui:ForEachRow.Body>
+                          <ActivityAction x:TypeArguments="sd:DataRow">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="sd:DataRow" Name="Row" />
+                            </ActivityAction.Argument>
+                            <TryCatch DisplayName="Try retrieving asset from Orchestrator" sap:VirtualizedContainerService.HintSize="436.8,563.2" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <TryCatch.Try>
+                                <Sequence DisplayName="Get asset from Orchestrator" sap:VirtualizedContainerService.HintSize="375.2,332" sap2010:WorkflowViewState.IdRef="Sequence_127">
+                                  <Sequence.Variables>
+                                    <Variable x:TypeArguments="ui:GenericValue" Name="AssetValue" />
+                                  </Sequence.Variables>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:GetRobotAsset TimeoutMS="{x:Null}" AssetName="[row(&quot;Asset&quot;).ToString]" CacheStrategy="None" DisplayName="Get Orchestrator asset" FolderPath="[row(&quot;OrchestratorAssetFolder&quot;).ToString]" sap:VirtualizedContainerService.HintSize="333.6,139.2" sap2010:WorkflowViewState.IdRef="GetRobotAsset_1">
+                                    <ui:GetRobotAsset.Value>
+                                      <OutArgument x:TypeArguments="ui:GenericValue">[AssetValue]</OutArgument>
+                                    </ui:GetRobotAsset.Value>
+                                  </ui:GetRobotAsset>
+                                  <Assign DisplayName="Assign asset value in Config" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_30">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Object">[out_Config_Proc(row("Name").ToString)]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Object">[AssetValue]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </Sequence>
+                              </TryCatch.Try>
+                              <TryCatch.Catches>
+                                <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="403.2,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ActivityAction x:TypeArguments="s:Exception">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="s:Exception" Name="Exception" />
+                                    </ActivityAction.Argument>
+                                    <If sap2010:Annotation.AnnotationText="Logs a message and throw exception in case the asset is specified in the Config file, but it could not be loaded from Orchestrator." Condition="[Not String.IsNullOrWhiteSpace(Row(&quot;Name&quot;).ToString.Trim)]" DisplayName="If asset name is specified, but it cannot be retrieved" sap:VirtualizedContainerService.HintSize="483.2,270.4" sap2010:WorkflowViewState.IdRef="If_6">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <If.Then>
+                                        <Throw DisplayName="Throw AssetFailedToLoad Exception" Exception="[new Exception(&quot;Loading asset &quot; + Row(&quot;Asset&quot;).ToString + &quot; failed: &quot; + Exception.Message)]" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                                      </If.Then>
+                                    </If>
+                                  </ActivityAction>
+                                </Catch>
+                              </TryCatch.Catches>
+                            </TryCatch>
+                          </ActivityAction>
+                        </ui:ForEachRow.Body>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </ui:ForEachRow>
+                    </Sequence>
+                  </TryCatch.Try>
+                  <TryCatch.Catches>
+                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="515.2,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ActivityAction x:TypeArguments="s:Exception">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="s:Exception" Name="Exception" />
+                        </ActivityAction.Argument>
+                        <Rethrow DisplayName="Rethrow loading asset exception" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+                      </ActivityAction>
+                    </Catch>
+                  </TryCatch.Catches>
+                </TryCatch>
+                <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="620.8,4029.6" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                  <TryCatch.Try>
+                    <Sequence sap:VirtualizedContainerService.HintSize="584,3798.4" sap2010:WorkflowViewState.IdRef="Sequence_124">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="ui:DatabaseConnection" Name="in_conSQL" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:BuildDataTable DataTable="[procesado]" DisplayName="Build Procesado" sap:VirtualizedContainerService.HintSize="542.4,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_Documento&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_Email&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_EstadoAcuse&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_EstadoRecibo&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_EstadoAceptacion&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_EstadoReclamo&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_Proceso&quot; msdata:Caption=&quot;&quot; type=&quot;xs:int&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_FechaInsercion&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_Procesado&quot; msdata:Caption=&quot;&quot; type=&quot;xs:int&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_daysRecibo&quot; msdata:Caption=&quot;&quot; type=&quot;xs:int&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_daysAceptacion&quot; msdata:Caption=&quot;&quot; type=&quot;xs:int&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;PRO_NumPedido&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;" />
+                      <ui:IfElseIf DisplayName="Flujo de Error Acuse y Recibido" sap:VirtualizedContainerService.HintSize="542.4,3484.8" sap2010:WorkflowViewState.IdRef="IfElseIf_2">
+                        <ui:IfElseIf.ConditionBlocks>
+                          <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
+                            <ui:IfElseIfBlock BlockType="If" Condition="[in_TransactionItem(&quot;proceso&quot;).ToString.Trim = &quot;4&quot; AND in_TransactionItem(&quot;acuse&quot;).ToString.Trim = &quot;e&quot;]">
+                              <ui:IfElseIfBlock.Then>
+                                <Sequence DisplayName="Notificación de Error" sap:VirtualizedContainerService.HintSize="375.2,623.2" sap2010:WorkflowViewState.IdRef="Sequence_118">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" ReplyTo="{x:Null}" SecurePassword="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="[&quot;Cordial saludo,&quot;+Environment.NewLine+Environment.NewLine+&quot;A continuación, se notifica la factura electrónica número: &quot;+in_TransactionItem(&quot;documento&quot;).ToString+ &quot; se encuentra en estado E (Error) en el 'acuse de recibido de la factura' para su respectiva revisión.&quot;+Environment.NewLine+Environment.NewLine+&quot;Muchas gracias.&quot;]" DisplayName="Notificación Error Acuse" Email="[out_Config_Proc(&quot;mailEnvios&quot;).ToString]" EnableSSL="True" sap:VirtualizedContainerService.HintSize="333.6,146.4" sap2010:WorkflowViewState.IdRef="SendMail_3" IgnoreCRL="False" IsBodyHtml="False" Password="[out_Config_Proc(&quot;passMailEnvios&quot;).ToString]" Port="587" SecureConnection="Auto" Server="smtp-legacy.office365.com" Subject="[&quot;NOTIFICACIÓN ERROR ACUSE DIAN FACTURA: &quot;+in_TransactionItem(&quot;documento&quot;).ToString]" To="sebastian.montoya@solutions-systems.com">
+                                    <ui:SendMail.Files>
+                                      <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                                    </ui:SendMail.Files>
+                                  </ui:SendMail>
+                                  <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&#xD;&#xA;&#x9;in_TransactionItem(&quot;documento&quot;).ToString,&#xD;&#xA;&#x9;in_TransactionItem(&quot;email&quot;).ToString,&#xD;&#xA;&#x9;in_TransactionItem(&quot;acuse&quot;).ToString,&#xD;&#xA;&#x9;in_TransactionItem(&quot;recibo&quot;).ToString,&#xD;&#xA;&#x9;in_TransactionItem(&quot;aceptacion&quot;).ToString,&#xD;&#xA;&#x9;in_TransactionItem(&quot;reclamo&quot;).ToString,&#xD;&#xA;&#x9;in_TransactionItem(&quot;proceso&quot;).ToString,&#xD;&#xA;&#x9;DateTime.Now(),&#xD;&#xA;&#x9;1,&#xD;&#xA;&#x9;0,&#xD;&#xA;&#x9;0,&#xD;&#xA;&#x9;in_TransactionItem(&quot;pedido&quot;).ToString&#xD;&#xA;}]" DataTable="[procesado]" DisplayName="Insert 1 a 1 Error" sap:VirtualizedContainerService.HintSize="333.6,188" sap2010:WorkflowViewState.IdRef="AddDataRow_5" />
+                                  <ui:InsertDataTable AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" DataTable="[procesado]" DisplayName="Insert" ExistingDbConnection="[conSQL]" sap:VirtualizedContainerService.HintSize="333.6,116" sap2010:WorkflowViewState.IdRef="InsertDataTable_2" TableName="EST_Procesados" />
+                                </Sequence>
+                              </ui:IfElseIfBlock.Then>
+                            </ui:IfElseIfBlock>
+                            <ui:IfElseIfBlock BlockType="ElseIf" Condition="[in_TransactionItem.Item(&quot;proceso&quot;).ToString.Trim = &quot;4&quot; AND in_TransactionItem(&quot;recibo&quot;).ToString.Trim = &quot;e&quot;]">
+                              <ui:IfElseIfBlock.Then>
+                                <Sequence DisplayName="Notificacion Recibido" sap:VirtualizedContainerService.HintSize="375.2,623.2" sap2010:WorkflowViewState.IdRef="Sequence_119">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" ReplyTo="{x:Null}" SecurePassword="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="[&quot;Cordial saludo,&quot;+Environment.NewLine+Environment.NewLine+&quot;A continuación, se notifica la factura electrónica número: &quot;+in_TransactionItem(&quot;documento&quot;).ToString+ &quot; se encuentra en estado E (Error) en el 'acuse de recibido de la mercancía' para su respectiva revisión.&quot;+Environment.NewLine+Environment.NewLine+&quot;Muchas gracias.&quot;]" DisplayName="Notificación Error Recibido" Email="[out_Config_Proc(&quot;mailEnvios&quot;).ToString]" EnableSSL="True" sap:VirtualizedContainerService.HintSize="333.6,146.4" sap2010:WorkflowViewState.IdRef="SendMail_4" IgnoreCRL="False" IsBodyHtml="False" Password="[out_Config_Proc(&quot;passMailEnvios&quot;).ToString]" Port="587" SecureConnection="Auto" Server="smtp-legacy.office365.com" Subject="[&quot;NOTIFICACIÓN ERROR RECIBIDO DIAN FACTURA: &quot;+in_TransactionItem(&quot;documento&quot;).ToString]" To="[out_Config_Proc(&quot;mailTo&quot;).ToString]">
+                                    <ui:SendMail.Files>
+                                      <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                                    </ui:SendMail.Files>
+                                  </ui:SendMail>
+                                  <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&#xA;&#x9;in_TransactionItem(&quot;documento&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;email&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;acuse&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;recibo&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;aceptacion&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;reclamo&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;proceso&quot;).ToString,&#xA;&#x9;DateTime.Now(),&#xA;&#x9;1,&#xA;&#x9;0,&#xA;&#x9;0,&#xA;&#x9;in_TransactionItem(&quot;pedido&quot;).ToString&#xA;}]" DataTable="[procesado]" DisplayName="Insert 1 a 1 Error" sap:VirtualizedContainerService.HintSize="333.6,188" sap2010:WorkflowViewState.IdRef="AddDataRow_8" />
+                                  <ui:InsertDataTable AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" DataTable="[procesado]" DisplayName="Insert" ExistingDbConnection="[conSQL]" sap:VirtualizedContainerService.HintSize="333.6,116" sap2010:WorkflowViewState.IdRef="InsertDataTable_3" TableName="EST_Procesados" />
+                                </Sequence>
+                              </ui:IfElseIfBlock.Then>
+                            </ui:IfElseIfBlock>
+                            <ui:IfElseIfBlock BlockType="ElseIf" Condition="[in_TransactionItem(&quot;acuse&quot;).ToString.Trim = &quot;a&quot; OR in_TransactionItem(&quot;acuse&quot;).ToString.Trim  =&quot;p&quot;]">
+                              <ui:IfElseIfBlock.Then>
+                                <Sequence DisplayName="Notificación de " sap:VirtualizedContainerService.HintSize="492,1146.4" sap2010:WorkflowViewState.IdRef="Sequence_122">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:IfElseIf DisplayName="Notificación de dias" sap:VirtualizedContainerService.HintSize="450.4,1053.6" sap2010:WorkflowViewState.IdRef="IfElseIf_1">
+                                    <ui:IfElseIf.ConditionBlocks>
+                                      <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
+                                        <ui:IfElseIfBlock BlockType="If" Condition="[in_TransactionItem(&quot;recibo&quot;).ToString.Trim = &quot;.&quot;]">
+                                          <ui:IfElseIfBlock.Then>
+                                            <Sequence DisplayName="Notificacion 7 dias" sap:VirtualizedContainerService.HintSize="375.2,368.8" sap2010:WorkflowViewState.IdRef="Sequence_120">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" ReplyTo="{x:Null}" SecurePassword="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="[&quot;Cordial saludo,&quot;+Environment.NewLine+Environment.NewLine+&quot;A continuación, se notifica la factura electrónica número: &quot;+in_TransactionItem(&quot;documento&quot;).ToString+&quot; se encuentra pendiente del 'acuse de recibido de la mercancía'.&quot;+Environment.NewLine+Environment.NewLine+&quot;Muchas gracias.&quot;]" DisplayName="Notificacion comprador recibo" Email="[out_Config_Proc(&quot;mailEnvios&quot;).ToString]" EnableSSL="True" sap:VirtualizedContainerService.HintSize="333.6,146.4" sap2010:WorkflowViewState.IdRef="SendMail_5" IgnoreCRL="False" IsBodyHtml="False" Password="[out_Config_Proc(&quot;passMailEnvios&quot;).ToString]" Port="587" SecureConnection="Auto" Server="smtp-legacy.office365.com" Subject="[&quot;NOTIFICACIÓN ACUSE PENDIENTE DE RECIBIDO DE MERCANCÍA FACTURA: &quot;+in_TransactionItem(&quot;documento&quot;).ToString]" To="[out_Config_Proc(&quot;mailTo&quot;).ToString]">
+                                                <ui:SendMail.Files>
+                                                  <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                                                </ui:SendMail.Files>
+                                              </ui:SendMail>
+                                              <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Insersión 1 a 1 add 7 dias" ExistingDbConnection="[conSQL]" sap:VirtualizedContainerService.HintSize="333.6,89.6" sap2010:WorkflowViewState.IdRef="ExecuteQuery_3" Sql="EXEC SP_InsertEstado &#xD;&#xA;    @in_documento = @Documento,&#xD;&#xA;    @in_email = @Email,&#xD;&#xA;    @in_acuse = @Acuse,&#xD;&#xA;    @in_recibo = @Recibo,&#xD;&#xA;    @in_aceptacion = @Aceptacion,&#xD;&#xA;    @in_reclamo = @Reclamo,&#xD;&#xA;&#x9;@in_proceso = @Proceso,&#xD;&#xA;    @in_noti = @Noti,&#xD;&#xA;&#x9;@in_pedido = @pedido&#x9;&#xD;&#xA;">
+                                                <ui:ExecuteQuery.Parameters>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Documento">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;documento&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Email">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;email&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Acuse">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;acuse&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Recibo">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;recibo&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Aceptacion">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;aceptacion&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Reclamo">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;reclamo&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:Int32" x:Key="Noti">
+                                                    <Literal x:TypeArguments="x:Int32" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Pedido">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;pedido&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:Int32" x:Key="Proceso">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="Cint(in_TransactionItem(&quot;proceso&quot;).ToString)" />
+                                                  </InArgument>
+                                                </ui:ExecuteQuery.Parameters>
+                                              </ui:ExecuteQuery>
+                                            </Sequence>
+                                          </ui:IfElseIfBlock.Then>
+                                        </ui:IfElseIfBlock>
+                                        <ui:IfElseIfBlock BlockType="ElseIf" Condition="[in_TransactionItem(&quot;recibo&quot;).ToString.Trim = &quot;a&quot; OR in_TransactionItem(&quot;recibo&quot;).ToString.Trim =&quot;p&quot;]">
+                                          <ui:IfElseIfBlock.Then>
+                                            <Sequence DisplayName="Notificación 3 dias" sap:VirtualizedContainerService.HintSize="375.2,368.8" sap2010:WorkflowViewState.IdRef="Sequence_121">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" ReplyTo="{x:Null}" SecurePassword="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="[&quot;Cordial saludo,&quot;+Environment.NewLine+Environment.NewLine+&quot;A continuación, se notifica la factura electrónica número: &quot;+in_TransactionItem(&quot;documento&quot;).ToString+&quot; se encuentra pendiente del 'acuse de aceptación o rechazo de la mercancía.'&quot;+Environment.NewLine+Environment.NewLine+&quot;Muchas gracias.&quot;]" DisplayName="Notificacion comprador recibido" Email="[out_Config_Proc(&quot;mailEnvios&quot;).ToString]" EnableSSL="True" sap:VirtualizedContainerService.HintSize="333.6,146.4" sap2010:WorkflowViewState.IdRef="SendMail_6" IgnoreCRL="False" IsBodyHtml="False" Password="[out_Config_Proc(&quot;passMailEnvios&quot;).ToString]" Port="587" SecureConnection="Auto" Server="smtp-legacy.office365.com" Subject="[&quot;NOTIFICACIÓN ACUSE ACEPTACION O RECHAZO DE LA MERCANCÍA FACTURA: &quot;+in_TransactionItem(&quot;documento&quot;).ToString]" To="[out_Config_Proc(&quot;mailTo&quot;).ToString]">
+                                                <ui:SendMail.Files>
+                                                  <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                                                </ui:SendMail.Files>
+                                              </ui:SendMail>
+                                              <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" CommandType="Text" DisplayName="Insersión 1 a 1 add 3 dias" ExistingDbConnection="[conSQL]" sap:VirtualizedContainerService.HintSize="333.6,89.6" sap2010:WorkflowViewState.IdRef="ExecuteQuery_4" Sql="EXEC SP_InsertEstado &#xD;&#xA;    @in_documento = @Documento,&#xD;&#xA;    @in_email = @Email,&#xD;&#xA;    @in_acuse = @Acuse,&#xD;&#xA;    @in_recibo = @Recibo,&#xD;&#xA;    @in_aceptacion = @Aceptacion,&#xD;&#xA;    @in_reclamo = @Reclamo,&#xD;&#xA;&#x9;@in_proceso = @Proceso,&#xD;&#xA;    @in_noti = @Noti,&#xD;&#xA;&#x9;@in_pedido = @pedido&#x9;&#xD;&#xA;">
+                                                <ui:ExecuteQuery.Parameters>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Documento">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;documento&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Email">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;email&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Acuse">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;acuse&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Recibo">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;recibo&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Aceptacion">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;aceptacion&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Reclamo">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;reclamo&quot;).ToString" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:Int32" x:Key="Proceso">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="Cint(in_TransactionItem(&quot;proceso&quot;).ToString)" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:Int32" x:Key="Noti">
+                                                    <Literal x:TypeArguments="x:Int32" Value="1" />
+                                                  </InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="Pedido">
+                                                    <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TransactionItem(&quot;pedido&quot;).ToString" />
+                                                  </InArgument>
+                                                </ui:ExecuteQuery.Parameters>
+                                              </ui:ExecuteQuery>
+                                            </Sequence>
+                                          </ui:IfElseIfBlock.Then>
+                                        </ui:IfElseIfBlock>
+                                      </sc:BindingList>
+                                    </ui:IfElseIf.ConditionBlocks>
+                                  </ui:IfElseIf>
+                                </Sequence>
+                              </ui:IfElseIfBlock.Then>
+                            </ui:IfElseIfBlock>
+                            <ui:IfElseIfBlock BlockType="Else">
+                              <ui:IfElseIfBlock.Then>
+                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="375.2,623.2" sap2010:WorkflowViewState.IdRef="Sequence_123">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" ReplyTo="{x:Null}" SecurePassword="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="[&quot;Cordial saludo,&quot;+Environment.NewLine+Environment.NewLine+&quot;A continuación, se notifica que la factura electrónica número: &quot;+in_TransactionItem(&quot;documento&quot;).ToString+&quot; con pedido: &quot;+in_TransactionItem(&quot;pedido&quot;).ToString+ &quot; no se encontró su bodega en Jaivana para notificar el estado: &quot;+in_TransactionItem(&quot;acuse&quot;).ToString+&quot; &quot;+in_TransactionItem(&quot;recibo&quot;).ToString+&quot; &quot;+in_TransactionItem(&quot;aceptacion&quot;).ToString+&quot; &quot;+in_TransactionItem(&quot;reclamo&quot;).ToString+Environment.NewLine+&quot;Por favor realizar la notificación manualmente&quot;+Environment.NewLine+Environment.NewLine+&quot;Muchas gracias.&quot;]" DisplayName="Notificación Error Desconocido" Email="[out_Config_Proc(&quot;mailEnvios&quot;).ToString]" EnableSSL="True" sap:VirtualizedContainerService.HintSize="333.6,146.4" sap2010:WorkflowViewState.IdRef="SendMail_7" IgnoreCRL="False" IsBodyHtml="False" Password="[out_Config_Proc(&quot;passMailEnvios&quot;).ToString]" Port="587" SecureConnection="Auto" Server="smtp-legacy.office365.com" Subject="PEDRO ESTADOS RADIAN NOTIFICACIÓN REQUIRIMIENTO MANUAL" To="[out_Config_Proc(&quot;mailTo&quot;).ToString]">
+                                    <ui:SendMail.Files>
+                                      <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                                    </ui:SendMail.Files>
+                                  </ui:SendMail>
+                                  <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[{&#xA;&#x9;in_TransactionItem(&quot;documento&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;email&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;acuse&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;recibo&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;aceptacion&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;reclamo&quot;).ToString,&#xA;&#x9;in_TransactionItem(&quot;proceso&quot;).ToString,&#xA;&#x9;DateTime.Now(),&#xA;&#x9;1,&#xA;&#x9;0,&#xA;&#x9;0,&#xA;&#x9;in_TransactionItem(&quot;pedido&quot;).ToString&#xA;}]" DataTable="[procesado]" DisplayName="Insert 1 a 1 Error" sap:VirtualizedContainerService.HintSize="333.6,188" sap2010:WorkflowViewState.IdRef="AddDataRow_9" />
+                                  <ui:InsertDataTable AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" DataTable="[procesado]" DisplayName="Insert" ExistingDbConnection="[conSQL]" sap:VirtualizedContainerService.HintSize="333.6,116" sap2010:WorkflowViewState.IdRef="InsertDataTable_4" TableName="EST_Procesados" />
+                                </Sequence>
+                              </ui:IfElseIfBlock.Then>
+                            </ui:IfElseIfBlock>
+                          </sc:BindingList>
+                        </ui:IfElseIf.ConditionBlocks>
+                      </ui:IfElseIf>
+                      <ui:ClearDataTable DataTable="[procesado]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="542.4,80.8" sap2010:WorkflowViewState.IdRef="ClearDataTable_2" />
+                    </Sequence>
+                  </TryCatch.Try>
+                  <TryCatch.Catches>
+                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="587.2,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ActivityAction x:TypeArguments="s:Exception">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                        </ActivityAction.Argument>
+                        <ui:SendMail Bcc="{x:Null}" Cc="{x:Null}" From="{x:Null}" MailMessage="{x:Null}" Name="{x:Null}" ReplyTo="{x:Null}" SecurePassword="{x:Null}" TimeoutMS="{x:Null}" UseOAuth="{x:Null}" Body="[&quot;Cordial saludo,&quot;+Environment.NewLine+Environment.NewLine+&quot;A continuación, se notifica la factura electrónica número: &quot;+in_TransactionItem(&quot;documento&quot;).ToString+ &quot; que se encuentra en estado E (Error) en el 'acuse de recibido de la factura' para su respectiva revisión.&quot;+Environment.NewLine+Environment.NewLine+&quot;Muchas gracias.&quot;]" DisplayName="Notificación Error Acuse" Email="[in_Config(&quot;mailEnvios&quot;).ToString]" EnableSSL="True" sap:VirtualizedContainerService.HintSize="333.6,146.4" sap2010:WorkflowViewState.IdRef="SendMail_8" IgnoreCRL="False" IsBodyHtml="False" Password="[in_Config(&quot;passMailEnvios&quot;).ToString]" Port="587" SecureConnection="Auto" Server="smtp-legacy.office365.com" Subject="[&quot;Cordial Saludo, &quot;+Environment.NewLine+Environment.NewLine+&quot;La factura: &quot;+in_TransactionItem(&quot;documento&quot;).ToString+&quot; con pedido: &quot;+in_TransactionItem(&quot;pedido&quot;).ToString+&quot; con estado: &quot;+in_TransactionItem(&quot;acuse&quot;).ToString+in_TransactionItem(&quot;recibo&quot;).ToString+in_TransactionItem(&quot;aceptacion&quot;).ToString+in_TransactionItem(&quot;reclamo&quot;).ToString+&quot; no ha podido ser notificador por un problema con Outlook.&quot;+Environment.NewLine+&quot;La factura no sera procesada para re intetarla en la proxima ejecución.&quot;]" To="sebastian.montoya@solutions-systems.com">
+                          <ui:SendMail.Files>
+                            <scg:List x:TypeArguments="InArgument(x:String)" Capacity="0" />
+                          </ui:SendMail.Files>
+                        </ui:SendMail>
+                      </ActivityAction>
+                    </Catch>
+                  </TryCatch.Catches>
+                </TryCatch>
+              </Sequence>
+            </FlowStep>
+          </FlowDecision.True>
+          <FlowDecision.False>
+            <FlowDecision x:Name="__ReferenceID1" Condition="[in_TransactionItem(&quot;proceso&quot;).ToString.Contains(&quot;2&quot;)]" DisplayName="Flow Decision" sap:VirtualizedContainerService.HintSize="79.2,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_3" True="{x:Reference __ReferenceID0}" False="{x:Reference __ReferenceID0}">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <av:Point x:Key="ShapeLocation">750.4,246.4</av:Point>
+                  <av:Size x:Key="ShapeSize">79.2,87.2</av:Size>
+                  <av:PointCollection x:Key="FalseConnector">829.6,290 850,290 850,354.4 310,354.4 310,324.4</av:PointCollection>
+                  <av:PointCollection x:Key="TrueConnector">750.4,290 410,290</av:PointCollection>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </FlowDecision>
+          </FlowDecision.False>
+        </FlowDecision>
+        <x:Reference>__ReferenceID1</x:Reference>
+        <x:Reference>__ReferenceID0</x:Reference>
+      </Flowchart>
+      <ui:Comment DisplayName="Comment (placeholder)" sap:VirtualizedContainerService.HintSize="1197.6,56" sap2010:WorkflowViewState.IdRef="Comment_1" Text="//  Invoke steps of the process" />
+    </Sequence>
+  </Sequence>
+</Activity>
